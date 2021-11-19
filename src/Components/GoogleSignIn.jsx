@@ -4,26 +4,9 @@ import { SignInWithGoogle } from "../Firebase/googleAuth";
 
 function GoogleSignIn() {
   return (
-    <>
-      <hr
-        style={{
-          border: "1px solid #f2f2f2",
-          width: "100%",
-          borderRadius: 0,
-        }}
-      />
-      <Button
-        endIcon={<GoogleIcon color="warning" />}
-        sx={{
-          textTransform: "capitalize",
-          width: "60%",
-          margin: "0 auto",
-        }}
-        onClick={() => SignInWithGoogle()}
-      >
-        sign in with google
-      </Button>
-    </>
+    <Button onClick={() => SignInWithGoogle()}>
+      <GoogleIcon sx={{ color: "rgba(2, 2, 22, 1)" }} />
+    </Button>
   );
 }
 

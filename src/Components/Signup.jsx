@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import Input from "./Input";
 import ButtonComponent from "./ButtonComponent";
 import SignupIcon from "@mui/icons-material/ArrowRightAltRounded";
-import GoogleSignIn from "./GoogleSignIn";
+import Oauth from "./Oauth";
 import { Link } from "react-router-dom";
 
 function Signup() {
@@ -26,19 +26,19 @@ function Signup() {
       <h3>Sign Up</h3>
       <Input
         ref={emailRef}
-        type="email"
+        inputType="email"
         placeholder="Email"
         onChangefunc={() => emailRef.current.setInputValue()}
       />
       <Input
         ref={passwordref}
-        type="password"
+        inputType="password"
         placeholder="Password"
         onChangefunc={() => emailRef.current.setInputValue()}
       />
       <Input
         ref={passwordConfRef}
-        type="password"
+        inputType="password"
         placeholder="Confirm Password"
         onChangefunc={() => emailRef.current.setInputValue()}
       />
@@ -47,10 +47,13 @@ function Signup() {
         displayIcon={<SignupIcon />}
         onClickFunc={() => console.log("Signing Up....")}
       />
+      <p style={{ margin: "10px auto", textDecoration: "underline" }}>
+        Sign in with
+      </p>
+      <Oauth />
       <Link to="/" style={{ margin: "0 auto" }}>
         Already have an account ? Sign In
       </Link>
-      <GoogleSignIn />
     </Box>
   );
 }

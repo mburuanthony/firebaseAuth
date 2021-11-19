@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import Input from "./Input";
 import ButtonComponent from "./ButtonComponent";
 import SignInIcon from "@mui/icons-material/LoginRounded";
-import GoogleSignIn from "./GoogleSignIn";
+import Oauth from "./Oauth";
 import { Link } from "react-router-dom";
 
 function Login() {
@@ -42,10 +42,13 @@ function Login() {
         displayIcon={<SignInIcon />}
         onClickFunc={() => console.log("Signing in....")}
       />
+      <p style={{ margin: "10px auto", textDecoration: "underline" }}>
+        Sign in with
+      </p>
+      <Oauth />
       <Link to="/signup" style={{ margin: "0 auto" }}>
         Do not have an account ? Signup
       </Link>
-      <GoogleSignIn />
     </Box>
   );
 }

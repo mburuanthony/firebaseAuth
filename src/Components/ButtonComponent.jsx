@@ -9,7 +9,7 @@ function ButtonComponent(props) {
       disableElevation
       sx={{
         width: "60%",
-        margin: "20px auto",
+        margin: "20px auto 0 auto",
         borderRadius: "30px",
         textTransform: "capitalize",
       }}
