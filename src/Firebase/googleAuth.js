@@ -9,7 +9,6 @@ export const SignInWithGoogle = () => {
       localStorage.setItem("username", res.user.displayName);
       localStorage.setItem("email", res.user.email);
       localStorage.setItem("profilePic", res.user.photoURL);
-      console.log(res);
     })
     .catch((err) => {
       console.log(err);
