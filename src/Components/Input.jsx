@@ -1,15 +1,7 @@
-import { useState, useImperativeHandle, forwardRef } from "react";
 import { TextField } from "@mui/material";
 
-const Input = forwardRef((props, ref) => {
-  const { inputType, placeholder, onChangefunc } = props;
-  const [inputVal, setinputVal] = useState();
-
-  useImperativeHandle(ref, () => ({
-    setInputValue() {
-      setinputVal(ref.current.value);
-    },
-  }));
+const Input = (props) => {
+  const { inputType, placeholder, inputVal, onChangefunc, inputError } = props;
 
   return (
     <TextField
@@ -19,9 +11,14 @@ const Input = forwardRef((props, ref) => {
       label={placeholder}
       value={inputVal}
       onChange={onChangefunc}
+      error={inputError}
       fullWidth
     />
   );
-});
+};
+
+Input.defaultProps = {
+  error: false,
+};
 
 export default Input;
