@@ -2,14 +2,17 @@ import { Box } from "@mui/material";
 
 function Index() {
   return (
-    <Box width="100%" height="100vh">
-      <img
-        src="https://source.unsplash.com/random"
-        alt=""
-        width="100%"
-        height="100%"
-      />
-    </Box>
+    <Box
+      width="100vw"
+      height="100vh"
+      sx={{
+        backgroundImage: "url(https://source.unsplash.com/random)",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
+      }}
+    ></Box>
   );
 }
 
