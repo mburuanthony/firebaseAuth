@@ -6,10 +6,12 @@ import SignupIcon from "@mui/icons-material/ArrowRightAltRounded";
 import Oauth from "./Oauth";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
+import { useSnackBar } from "../../Context/snackBarContext";
 
 function Signup() {
   const history = useHistory();
   const { signUp } = useAuth();
+  const { setSnackOpen, setSnackMessage } = useSnackBar();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,7 +29,6 @@ function Signup() {
   }, [email, password, passwordConf]);
 
   async function SignUpFunc() {
-    // regular expression email validation
     !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email) || !email
       ? setEmailError(true)
       : setEmailError(false);
@@ -44,10 +45,12 @@ function Signup() {
       // create user
       try {
         await signUp({ email, password });
-        history.pushState("/");
-      } catch (e) {
-        setErrorMsg("Failed to create account");
-        console.log(e);
+        history.push("/");
+        setSnackOpen(true);
+        setSnackMessage(`Account created for ${email}`);
+      } catch {
+        setSnackOpen(true);
+        setSnackMessage("Failed to create Account");
       }
     }
   }
@@ -73,7 +76,7 @@ function Signup() {
       />
       {emailError && (
         <span style={{ color: "red", fontSize: "14px" }}>
-          Enter a valid email
+          Invalid Email Address
         </span>
       )}
       <Input

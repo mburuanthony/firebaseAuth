@@ -2,10 +2,13 @@ import { useAuth } from "../../Context/AuthContext";
 import { Button } from "@mui/material";
 import { ExitToAppRounded } from "@mui/icons-material";
 import { useHistory } from "react-router-dom";
+import { useSnackBar } from "../../Context/snackBarContext";
 
-function Signout() {
+function Signout({ closeMenu }) {
   const history = useHistory();
-  const { LogOut } = useAuth();
+  const { LogOut, setCurrentUser } = useAuth();
+
+  const { setSnackOpen, setSnackMessage } = useSnackBar();
 
   return (
     <Button
@@ -14,12 +17,16 @@ function Signout() {
       sx={{ textTransform: "capitalize" }}
       endIcon={<ExitToAppRounded />}
       onClick={async () => {
+        closeMenu();
         try {
           await LogOut();
-          window.location.reload();
+          setCurrentUser(null);
           history.push("/");
+          setSnackOpen(true);
+          setSnackMessage("You were Signed Out");
         } catch (e) {
-          console.log(e);
+          setSnackOpen(true);
+          setSnackMessage("Unable to sign out");
         }
       }}
     >

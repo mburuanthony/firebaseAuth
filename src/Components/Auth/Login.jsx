@@ -6,27 +6,30 @@ import SignInIcon from "@mui/icons-material/LoginRounded";
 import Oauth from "./Oauth";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
+import { useSnackBar } from "../../Context/snackBarContext";
 
 function Login() {
   const history = useHistory();
   const { signIn } = useAuth();
 
+  const { setSnackOpen, setSnackMessage } = useSnackBar();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isDisabled, setisDisabled] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
 
   async function LoginFunc() {
     if (email === "" || password === "") {
-      setErrorMsg("Unable to Sign In without credentials");
+      setSnackOpen(true);
+      setSnackMessage("Unable to Sign In");
     } else {
       try {
         await signIn({ email, password });
-        setisDisabled(true);
         history.push("/");
-      } catch (e) {
-        setErrorMsg("Unable to Sign In");
-        console.log(e);
+        setSnackOpen(true);
+        setSnackMessage("You were Signed In");
+      } catch {
+        setSnackOpen(true);
+        setSnackMessage("Unable to Sign In");
       }
     }
   }
@@ -57,14 +60,11 @@ function Login() {
         inputVal={password}
         onChangefunc={(e) => setPassword(e.target.value)}
       />
-      {errorMsg && (
-        <span style={{ color: "red", fontSize: "14px" }}>{errorMsg}</span>
-      )}
+
       <ButtonComponent
         displayText="Sign In"
         displayIcon={<SignInIcon />}
         onClickFunc={LoginFunc}
-        isDisabled={isDisabled}
       />
       <p style={{ margin: "10px auto", textDecoration: "underline" }}>
         Sign in with

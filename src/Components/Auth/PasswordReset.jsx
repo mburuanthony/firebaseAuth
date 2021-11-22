@@ -1,20 +1,33 @@
 import { useState, useRef } from "react";
 import { Box, TextField, Button } from "@mui/material";
 import ResetIcon from "@mui/icons-material/ChangeCircle";
+import { useAuth } from "../../Context/AuthContext";
+import { useSnackBar } from "../../Context/snackBarContext";
 
 function PasswordReset() {
   const emailRef = useRef();
   const [address, setAddress] = useState("");
   const [mailError, setMailError] = useState(false);
-  const [showMsg, setShowMsg] = useState(false);
 
-  const SendReq = () => {
-    if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(address)) {
+  const { setSnackOpen, setSnackMessage } = useSnackBar();
+
+  const { ResetPassword } = useAuth();
+  const SendReq = async () => {
+    if (
+      !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(address) ||
+      !address
+    ) {
       setMailError(true);
     } else {
       setMailError(false);
-      setShowMsg(true);
-      console.log(`Sending password reset request for...${address}`);
+      try {
+        await ResetPassword({ email: address });
+        setSnackOpen(true);
+        setSnackMessage(`Password reset request sent for ${address}`);
+      } catch {
+        setSnackOpen(true);
+        setSnackMessage("Password reset request failed");
+      }
     }
   };
 
@@ -30,11 +43,6 @@ function PasswordReset() {
       borderRadius="8px"
       boxShadow="0px 2px 4px rgba(0, 0, 0, 0.15)"
     >
-      {address && showMsg && (
-        <span style={{ fontSize: "14px", margin: "20px auto" }}>
-          Password reset request sent for {address}
-        </span>
-      )}
       <TextField
         ref={emailRef}
         variant="standard"
