@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Box, Avatar, Popover, Button } from "@mui/material";
+import { Box, Avatar, Popover, Button, Link } from "@mui/material";
 import { useAuth } from "../../Context/AuthContext";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Signout from "../Auth/Signout";
 import UserIcon from "@mui/icons-material/AccountCircle";
 import { deepOrange } from "@mui/material/colors";
@@ -21,29 +21,47 @@ function Top() {
   return (
     <Box
       width="100%"
-      height="50px"
       padding="2px 6px"
       position="fixed"
       top={0}
       left={0}
       backgroundColor="transparent"
       zIndex={2000}
+      display="flex"
+      alignItems="center"
+      justifyContent="space-between"
     >
-      <Link to="/login">Sign In</Link>
-
+      <Link
+        href="/login"
+        underline="none"
+        variant="button"
+        display={!currentUser ? "block" : "none"}
+        sx={{
+          margin: "10px 0 0 0",
+          padding: "5px 10px",
+          border: 0,
+          borderRadius: "4px",
+          backgroundColor: "rgba(0, 0, 0, 0.25)",
+          color: "rgb(255, 255, 255)",
+          textTransform: "capitalize",
+          transition: "all ease .4s",
+          "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.55)" },
+        }}
+      >
+        Sign In
+      </Link>
       {currentUser && (
         <Avatar
           src={currentUser?.photoURL}
           sx={{
-            bgcolor: deepOrange[500],
-            float: "right",
+            width: "34px",
+            height: "34px",
+            bgcolor: deepOrange[300],
             margin: "10px 20px 0 0",
             cursor: "pointer",
           }}
           onClick={(e) => setAnchorElmnt(e.currentTarget)}
-        >
-          {currentUser?.email[0]}
-        </Avatar>
+        />
       )}
       <Popover
         id={id}
@@ -82,7 +100,7 @@ function Top() {
         >
           Profile
         </Button>
-        <Signout />
+        <Signout closeMenu={closePopOver} />
       </Popover>
     </Box>
   );
