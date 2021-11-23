@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import Input from "../Input";
 import ButtonComponent from "../ButtonComponent";
@@ -10,9 +10,16 @@ import { useSnackBar } from "../../Context/snackBarContext";
 
 function Login() {
   const history = useHistory();
-  const { signIn } = useAuth();
-
+  const { signIn, currentUser } = useAuth();
   const { setSnackOpen, setSnackMessage } = useSnackBar();
+
+  useEffect(() => {
+    if (currentUser) {
+      setSnackOpen(true);
+      setSnackMessage("You are Signed In");
+      history.push("/");
+    }
+  }, [currentUser, history, setSnackOpen, setSnackMessage]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

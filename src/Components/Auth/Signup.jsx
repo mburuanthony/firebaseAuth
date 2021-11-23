@@ -10,7 +10,7 @@ import { useSnackBar } from "../../Context/snackBarContext";
 
 function Signup() {
   const history = useHistory();
-  const { signUp } = useAuth();
+  const { signUp, currentUser } = useAuth();
   const { setSnackOpen, setSnackMessage } = useSnackBar();
 
   const [email, setEmail] = useState("");
@@ -23,10 +23,23 @@ function Signup() {
   const [isDisabled, setisDisabled] = useState(false);
 
   useEffect(() => {
+    if (currentUser) {
+      setSnackOpen(true);
+      setSnackMessage("You are Signed In");
+      history.push("/");
+    }
     email === "" || password === "" || passwordConf === ""
       ? setisDisabled(true)
       : setisDisabled(false);
-  }, [email, password, passwordConf]);
+  }, [
+    email,
+    password,
+    passwordConf,
+    currentUser,
+    history,
+    setSnackOpen,
+    setSnackMessage,
+  ]);
 
   async function SignUpFunc() {
     !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email) || !email
