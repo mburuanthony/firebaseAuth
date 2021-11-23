@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import Signout from "../Auth/Signout";
 import UserIcon from "@mui/icons-material/AccountCircle";
 import { deepOrange } from "@mui/material/colors";
+import Profilepic from "../../Assets/Images/default_profile_pic.png";
 
 function Top() {
   const history = useHistory();
@@ -52,7 +53,7 @@ function Top() {
       </Link>
       {currentUser && (
         <Avatar
-          src={currentUser?.photoURL}
+          src={currentUser?.photoURL ?? Profilepic}
           sx={{
             width: "34px",
             height: "34px",
@@ -100,7 +101,7 @@ function Top() {
         >
           Profile
         </Button>
-        <Signout closeMenu={closePopOver} />
+        <Signout />
       </Popover>
     </Box>
   );

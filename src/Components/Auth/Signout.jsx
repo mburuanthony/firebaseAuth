@@ -17,7 +17,6 @@ function Signout({ closeMenu }) {
       sx={{ textTransform: "capitalize" }}
       endIcon={<ExitToAppRounded />}
       onClick={async () => {
-        closeMenu();
         try {
           await LogOut();
           setCurrentUser(null);
